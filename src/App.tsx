@@ -1,5 +1,6 @@
 import * as esbuild from 'esbuild-wasm';
 import { useState, useEffect, useRef } from 'react';
+import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
 
 const App = () => {
   const ref = useRef(false);
@@ -8,7 +9,7 @@ const App = () => {
 
   const startService = async () => {
     await esbuild.initialize({
-      worker: true,
+      worker: false,
       wasmURL: '/esbuild.wasm',
     });
     ref.current = true;
@@ -22,12 +23,14 @@ const App = () => {
       return;
     }
 
-    const result = await esbuild.transform(input, {
-      loader: 'jsx',
-      target: 'es2015',
+    const result = await esbuild.build({
+      entryPoints: ['index.js'],
+      bundle: true,
+      write: false,
+      plugins: [unpkgPathPlugin()],
     });
     console.log('result: ', result);
-    setCode(result.code);
+    setCode(result.outputFiles[0].text);
   };
 
   return (

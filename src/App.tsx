@@ -2,12 +2,12 @@ import * as esbuild from 'esbuild-wasm';
 import { useState, useEffect, useRef } from 'react';
 import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
 import { fetchPlugin } from './plugins/fetch-plugin';
+import CodeEditor from './components/code-editor';
 
 const App = () => {
   const ref = useRef<boolean>(false);
   const iframe = useRef<HTMLIFrameElement>(null);
   const [input, setInput] = useState<string>('');
-  // const [code, setCode] = useState('');
 
   const startService = async () => {
     await esbuild.initialize({
@@ -25,6 +25,12 @@ const App = () => {
       return;
     }
 
+    if (iframe.current === null) {
+      return;
+    }
+
+    iframe.current.srcdoc = html;
+
     const result = await esbuild.build({
       entryPoints: ['index.js'],
       bundle: true,
@@ -35,16 +41,8 @@ const App = () => {
         global: 'window',
       },
     });
-    // console.log('result: ', result);
-    // setCode(result.outputFiles[0].text);
-    if (
-      iframe === null ||
-      iframe.current === null ||
-      iframe.current.contentWindow === null
-    ) {
-      return;
-    }
-    iframe.current.contentWindow.postMessage(result.outputFiles[0].text, '*');
+
+    iframe.current.contentWindow?.postMessage(result.outputFiles[0].text, '*');
   };
 
   const html = `
@@ -54,16 +52,21 @@ const App = () => {
         <div id="root"></div>
         <script>
           window.addEventListener('message', (event) => {
-              console.log(event.data);
+            try {
               eval(event.data);
-            }, false)
-          </script>
+            } catch (err) {
+              const root = document.querySelector('#root');
+              root.innerHTML = '<div style="color: red;"><h4>Runtime Error</h4>' + err + '</div>';
+              console.error(err);
+            }
+          }, false);
       </body>
     </html>
   `;
 
   return (
     <div>
+      <CodeEditor />
       <textarea
         value={input}
         onChange={(e) => setInput(e.target.value)}
@@ -71,7 +74,6 @@ const App = () => {
       <div>
         <button onClick={onClick}>Submit</button>
       </div>
-      {/* <pre>{code}</pre> */}
       <iframe
         srcDoc={html}
         frameBorder="1"

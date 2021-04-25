@@ -11,11 +11,12 @@ const App = () => {
 
   const startService = async () => {
     await esbuild.initialize({
-      worker: false,
+      worker: true,
       wasmURL: '/esbuild.wasm', // todo grab esbuild.wasm from unpkg
     });
     ref.current = true;
   };
+
   useEffect(() => {
     startService();
   }, []);
@@ -60,13 +61,17 @@ const App = () => {
               console.error(err);
             }
           }, false);
+        </script>
       </body>
-    </html>
+    </html> 
   `;
 
   return (
     <div>
-      <CodeEditor />
+      <CodeEditor
+        initialValue="console.log('test')"
+        onChange={(value) => setInput(value)}
+      />
       <textarea
         value={input}
         onChange={(e) => setInput(e.target.value)}

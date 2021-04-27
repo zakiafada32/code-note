@@ -56,6 +56,9 @@ const Resizable: React.FC<ResizableProps> = ({ direction, children }) => {
     };
   }
 
+  // there is some warning in console log "findDOMNode is deprecated in StrictMode.
+  // findDOMNode was passed an instance of DraggableCore which is inside StrictMode ...."
+  // https://github.com/react-grid-layout/react-resizable/issues/161
   return <ResizableBox {...resizableProps}>{children}</ResizableBox>;
 };
 

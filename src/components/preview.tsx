@@ -1,13 +1,15 @@
 import { useRef, useEffect } from 'react';
 
-import './code-editor.css';
+import './preview.css';
 interface PreviewProps {
   code: string;
 }
 
 const html = `
   <html>
-    <head></head>
+    <head>
+      <style>html { background-color: white; }</style>
+    </head>
     <body>
       <div id="root"></div>
       <script>
@@ -40,16 +42,15 @@ const Preview: React.FC<PreviewProps> = ({ code }) => {
     if (iframe.current === null) {
       return;
     }
-    iframe.current.srcdoc = html; // todo research iframe reloading
   };
 
   return (
-    <div className="editor-wrapper">
+    <div className="preview-wrapper">
       <button
         className="button button-format is-primary is-small"
         onClick={onResetClick}
       >
-        Format
+        Reset
       </button>
       <iframe
         ref={iframe}

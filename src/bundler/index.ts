@@ -2,7 +2,7 @@ import * as esbuild from 'esbuild-wasm';
 import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
 import { fetchPlugin } from './plugins/fetch-plugin';
 
-let service: boolean;
+let service: boolean; // to check already initialize or not
 
 export const bundle = async (rawCode: string) => {
   if (!service) {

@@ -17,7 +17,7 @@ interface CodeEditorProps {
 const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
   const editorRef = useRef<any>(); // todo update type
 
-  const onEditorDidMount: OnMount = (monacoEditor) => {
+  const onEditorDidMount: OnMount = (monacoEditor, _monaco) => {
     editorRef.current = monacoEditor;
     monacoEditor.onDidChangeModelContent(() => {
       onChange(monacoEditor.getValue());
@@ -83,7 +83,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
         defaultValue={initialValue}
         theme="vs-dark"
         language="javascript"
-        height="500px"
+        height="100%"
         options={{
           wordWrap: 'on',
           minimap: { enabled: false },

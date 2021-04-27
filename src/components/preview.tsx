@@ -33,14 +33,17 @@ const Preview: React.FC<PreviewProps> = ({ code }) => {
     if (iframe.current === null) {
       return;
     }
-
-    iframe.current.contentWindow?.postMessage(code, '*');
+    iframe.current.srcdoc = html;
+    setTimeout(() => {
+      iframe.current?.contentWindow?.postMessage(code, '*');
+    }, 50);
   }, [code]);
 
   const onResetClick = () => {
     if (iframe.current === null) {
       return;
     }
+    iframe.current.srcdoc = html;
   };
 
   return (

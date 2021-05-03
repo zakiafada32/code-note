@@ -11,16 +11,16 @@
   background-color: white;
 }
 
-.preview-wrapper .button-format {
+.preview-wrapper .button-reset {
   position: absolute;
   top: 5px;
   right: 5px;
-  z-index: 20;
+  /* z-index: 10;   update dom order to remove z-index   */
   opacity: 0;
   transition: opacity 0.3s;
 }
 
-.preview-wrapper:hover .button-format {
+.preview-wrapper:hover .button-reset {
   opacity: 1;
 }
 

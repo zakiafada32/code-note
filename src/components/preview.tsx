@@ -58,12 +58,6 @@ const Preview: React.FC<PreviewProps> = ({ code, errStatus }) => {
 
   return (
     <div className="preview-wrapper">
-      <button
-        className="button button-format is-primary is-small"
-        onClick={onResetClick}
-      >
-        Reset
-      </button>
       <iframe
         ref={iframe}
         srcDoc={html}
@@ -71,6 +65,12 @@ const Preview: React.FC<PreviewProps> = ({ code, errStatus }) => {
         title="sandbox frame"
       />
       {errStatus && <div className="preview-error">{errStatus}</div>}
+      <button
+        className="button button-reset is-primary is-small"
+        onClick={onResetClick}
+      >
+        Reset
+      </button>
     </div>
   );
 };

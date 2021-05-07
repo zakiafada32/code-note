@@ -6,6 +6,7 @@ import Resizable from './resizable';
 import { Cell } from '../state';
 import { useActions } from '../hooks/use-actions';
 import { useTypedSelector } from '../hooks/use-typed-selector';
+import { useCumulativeCode } from '../hooks/use-cumulative-code';
 
 import './code-cell.css';
 
@@ -16,23 +17,23 @@ interface CodeCellProps {
 const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
   const { updateCell, createBunlde } = useActions();
   const bundle = useTypedSelector((state) => state.bundles[cell.id]);
-  console.log(cell.id, bundle);
+  const cumulativeCode = useCumulativeCode(cell.id);
 
   useEffect(() => {
     if (!bundle) {
-      createBunlde(cell.id, cell.content);
+      createBunlde(cell.id, cumulativeCode);
       return;
     }
 
     const timer = setTimeout(async () => {
-      createBunlde(cell.id, cell.content);
+      createBunlde(cell.id, cumulativeCode);
     }, 750);
 
     return () => {
       clearTimeout(timer);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cell.content, cell.id, createBunlde]);
+  }, [cumulativeCode, cell.id, createBunlde]);
 
   return (
     <Resizable direction="vertical">
@@ -50,10 +51,12 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
           />
         </Resizable>
         {!bundle || bundle.loading ? (
-          <div className="progress-cover">
-            <progress className="progress is-small is-primary" max="100">
-              Loading
-            </progress>
+          <div className="progress-wrapper">
+            <div className="progress-cover">
+              <progress className="progress is-small is-primary" max="100">
+                Loading
+              </progress>
+            </div>
           </div>
         ) : (
           <Preview code={bundle.code} errStatus={bundle.err} />

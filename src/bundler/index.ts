@@ -19,6 +19,13 @@ export const bundle = async (rawCode: string) => {
     }
   }
 
+  if (!service) {
+    return {
+      code: '',
+      err: '',
+    };
+  }
+
   try {
     const result = await esbuild.build({
       entryPoints: ['index.js'],
@@ -29,6 +36,8 @@ export const bundle = async (rawCode: string) => {
         'process.env.NODE_ENV': '"production"',
         global: 'window',
       },
+      jsxFactory: '_React.createElement',
+      jsxFragment: '_React.Fragment',
     });
 
     return {

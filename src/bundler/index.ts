@@ -2,32 +2,18 @@ import * as esbuild from 'esbuild-wasm';
 import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
 import { fetchPlugin } from './plugins/fetch-plugin';
 
-let service = false; // to check already initialize or not
+let service: esbuild.Service; // to check already initialize or not
 
 export const bundle = async (rawCode: string) => {
   if (!service) {
-    try {
-      await esbuild.initialize({
-        worker: true,
-        wasmURL: '/esbuild.wasm', // todo grab esbuild.wasm from unpkg
-      });
-      service = true;
-    } catch (error) {
-      // workaround because esbuild throw an error
-      // cannot call "initalize" more than once
-      console.log('esbuild initialized');
-    }
-  }
-
-  if (!service) {
-    return {
-      code: '',
-      err: '',
-    };
+    service = await esbuild.startService({
+      worker: true,
+      wasmURL: '/esbuild.wasm', // todo grab esbuild.wasm from unpkg
+    });
   }
 
   try {
-    const result = await esbuild.build({
+    const result = await service.build({
       entryPoints: ['index.js'],
       bundle: true,
       write: false,

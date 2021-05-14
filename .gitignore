@@ -11,6 +11,7 @@
 
 # production
 /build
+*/*/build
 
 # misc
 .DS_Store
@@ -27,3 +28,4 @@ note.txt
 samples/
 
 dist/
+.vscode

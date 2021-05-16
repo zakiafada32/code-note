@@ -1,5 +1,5 @@
 {
-  "name": "cli",
+  "name": "jschalk",
   "version": "1.0.0",
   "description": "",
   "main": "index.ts",
@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "commander": "^7.2.0",
-    "local-api": "^1.0.0"
+    "@jschalk/local-api": "^1.0.0"
   },
   "devDependencies": {
     "@types/node": "^15.0.2",

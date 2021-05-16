@@ -22,7 +22,9 @@ export const serve = (
       })
     );
   } else {
-    const packagePath = require.resolve('local-client/build/index.html');
+    const packagePath = require.resolve(
+      '@jschalk/local-client/build/index.html'
+    );
     console.log(packagePath);
     app.use(express.static(path.dirname(packagePath)));
   }

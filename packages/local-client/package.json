@@ -1,13 +1,12 @@
 {
   "name": "@jschalk/local-client",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "publishConfig": {
     "access": "public"
   },
   "files": [
     "build"
   ],
-  "dependencies": {},
   "devDependencies": {
     "@babel/parser": "7.13.16",
     "@babel/traverse": "7.13.17",

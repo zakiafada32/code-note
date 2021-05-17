@@ -1,8 +1,14 @@
 {
   "name": "@jschalk/local-client",
   "version": "0.1.0",
-  "private": true,
-  "dependencies": {
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "build"
+  ],
+  "dependencies": {},
+  "devDependencies": {
     "@babel/parser": "7.13.16",
     "@babel/traverse": "7.13.17",
     "@fortawesome/fontawesome-free": "^5.15.3",
@@ -38,7 +44,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prepublishOnly": "npm run build"
   },
   "eslintConfig": {
     "extends": [

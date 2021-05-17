@@ -9,6 +9,7 @@ export const bundle = async (rawCode: string) => {
     service = await esbuild.startService({
       worker: true,
       wasmURL: '/esbuild.wasm', // todo grab esbuild.wasm from unpkg
+      // wasmURL: 'https://unpkg.com/esbuild-wasm@0.8.27/esbuild.wasm',
     });
   }
 

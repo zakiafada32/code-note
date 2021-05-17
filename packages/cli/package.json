@@ -1,6 +1,6 @@
 {
   "name": "jschalk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "publishConfig": {
     "access": "public"
@@ -26,5 +26,6 @@
     "commander": "^7.2.0",
     "esbuild": "0.8.26",
     "typescript": "^4.2.4"
-  }
+  },
+  "gitHead": "89d59777c74c928c235b9a9d21687770c2cb5edb"
 }

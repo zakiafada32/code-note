@@ -2,7 +2,7 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "start": "lerna run start --parallel"
+    "start": "lerna run start --stream --parallel"
   },
   "devDependencies": {
     "lerna": "^3.22.1"

@@ -14,6 +14,8 @@ import {
 import { CellTypes, Cell } from '../cell';
 import { RootState } from '../reducers';
 
+import { defaultCells } from '../defaultCells';
+
 export const updateCell = (id: string, content: string): UpdateCellAction => {
   return {
     type: ActionType.UPDATE_CELL,
@@ -78,6 +80,9 @@ export const fetchCells = () => {
 
     try {
       const { data }: { data: Cell[] } = await axios.get('/cells');
+      if (data.length < 1) {
+        data.push(...defaultCells);
+      }
 
       dispatch({ type: ActionType.FETCH_CELLS_COMPLETE, payload: data });
     } catch (err) {
